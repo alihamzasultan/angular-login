@@ -1,0 +1,47 @@
+<div class="table-wrapper">
+    <!-- Table -->
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Batch Number</th>
+            <th>Serial Number</th>
+            <th>Type</th>
+            <th>Request Type</th>
+            <th>Received From</th>
+            <th>Destination</th>
+            <th>Product Name</th>
+            <th>Product Code</th>
+            <th>Transaction Token</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of data | slice:0:rowsPerPage">
+            <td>{{ item.batchNumber }}</td>
+            <td>{{ item.serialNumber }}</td>
+            <td>{{ item.type }}</td>
+            <td>{{ item.requestType }}</td>
+            <td>{{ item.receivedFrom }}</td>
+            <td>{{ item.destination }}</td>
+            <td>{{ item.productName }}</td>
+            <td>{{ item.productCode }}</td>
+            <td>{{ item.transactionToken }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <!-- Table controls (Rows per page dropdown) -->
+
+  </div>
+  <div class="table-controls">
+    <label for="rows">Rows per page:</label>
+    <select id="rows" [(ngModel)]="rowsPerPage">
+      <option *ngFor="let option of rowsOptions" [value]="option">
+        {{ option }}
+      </option>
+    </select>
+  </div>
+  
+
+ 

@@ -2,17 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router'; // Import Router
 import axios from 'axios';
+import Swal from 'sweetalert2'; // Import SweetAlert2
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
 })
-export class AppComponent implements OnInit {
+export class LoginComponent implements OnInit {
   loginForm: FormGroup;
 
   constructor(private fb: FormBuilder, private router: Router) { // Inject Router
-    // Initialize the form in the constructor
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(5)]],
@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // You can still perform additional initialization here if needed
+    // Initialization if necessary
   }
 
   onSubmit() {
@@ -39,13 +39,35 @@ export class AppComponent implements OnInit {
       'Content-Type': 'application/json',
     };
     const data = { email, password };
-
+  
     axios
       .post(url, data, { headers })
       .then((response) => {
         console.log('Response:', response.data);
-        // Navigate to the dashboard after successful login
-        this.router.navigate(['/dashboard']); 
+  
+        if (response.data.message === 'Invalid username or password.') {
+          console.error('Invalid credentials');
+          Swal.fire({
+            icon: 'error',
+            title: 'Invalid credentials',
+            text: 'The email or password you entered is incorrect.',
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        } else {
+          const accessToken = response.data.access_token; // Store the token
+          localStorage.setItem('access_token', accessToken); // Save token in localStorage
+  
+          Swal.fire({
+            icon: 'success',
+            title: 'Login Successful!',
+            text: 'Welcome back to the portal.',
+            showConfirmButton: false,
+            timer: 1500,
+          }).then(() => {
+            this.router.navigate(['/dashboard']);
+          });
+        }
       })
       .catch((error) => {
         if (axios.isAxiosError(error)) {
@@ -55,4 +77,5 @@ export class AppComponent implements OnInit {
         }
       });
   }
+  
 }

@@ -1,0 +1,90 @@
+.table-wrapper {
+    position: relative; /* So the controls can be positioned relative to this container */
+    margin: 20px auto;
+    max-width: 90%;
+  }
+  
+  .table-container {
+    max-height: 500px; /* Adjust based on your requirements */
+    overflow-y: auto; /* Enable vertical scrolling */
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'Roboto', sans-serif;
+      font-size: 14px;
+      color: #333;
+  
+      thead {
+        background-color: #007bff;
+        color: #fff;
+  
+        tr {
+          th {
+            padding: 12px 15px;
+            text-align: left;
+            text-transform: uppercase;
+            font-weight: bold;
+            border-bottom: 2px solid #0056b3;
+  
+            /* Sticky Header */
+            position: sticky;
+            top: 0;
+            z-index: 10; /* Ensure the header stays on top */
+            background-color: #007bff;
+          }
+        }
+      }
+  
+      tbody {
+        tr {
+          &:nth-child(even) {
+            background-color: #f2f2f2;
+          }
+  
+          &:hover {
+            background-color: #e9f5ff;
+          }
+  
+          td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ddd;
+          }
+        }
+      }
+    }
+  }
+  
+  .table-controls {
+    position: absolute; /* Position relative to the table-wrapper */
+    bottom: 10px; /* Distance from the bottom */
+    right: 10px; /* Distance from the right */
+    background-color: #fff;
+    padding: 5px 15px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  
+    label {
+      margin-right: 10px;
+    }
+  
+    select {
+      padding: 5px 10px;
+      font-size: 14px;
+    }
+  }
+  .pagination-controls {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
