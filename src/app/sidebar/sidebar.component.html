@@ -1,0 +1,19 @@
+
+<div *ngIf="isSidebarVisible" class="sidebar">
+<div class="sidebar">
+  <!-- Close Button -->
+  <h3 class="sidebar-title">Menu</h3>
+  <ul class="menu">
+    <li
+      class="menu-item"
+      *ngFor="let item of menuItems"
+      [routerLink]="item.route"
+      routerLinkActive="active"
+    >
+      <i class="material-icons">{{ item.icon }}</i>
+      <span>{{ item.label }}</span>
+    </li>
+  </ul>
+</div>
+</div>
+  <!-- Sidebar content here -->

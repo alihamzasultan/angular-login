@@ -7,16 +7,28 @@ import axios from 'axios';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-  data: any[] = []; // All data fetched from the API
-  paginatedData: any[] = []; // Data to display in the table
-  rowsPerPage: number = 10; // Number of rows per page
-  currentPage: number = 1; // Current page number
-  rowsOptions: number[] = [5, 10, 15, 100]; // Options for rows per page dropdown
+  isSidebarVisible = true; // Sidebar initially visible
+  data: any[] = [];
+  paginatedData: any[] = [];
+  rowsPerPage: number = 10; // Ensure 10 rows per page
+  currentPage: number = 1;
+  rowsOptions: number[] = [5, 10, 15, 100];
+  showTable = true;
 
   constructor() {}
 
   ngOnInit(): void {
     this.fetchData();
+  }
+
+  // Toggle Sidebar visibility
+  toggleSidebar() {
+    this.isSidebarVisible = !this.isSidebarVisible;
+  }
+
+  // Toggle Table visibility
+  toggleTableVisibility() {
+    this.showTable = !this.showTable;
   }
 
   fetchData() {
@@ -33,11 +45,9 @@ export class DashboardComponent implements OnInit {
         .get(url, { headers })
         .then((response) => {
           console.log('Fetched Data:', response.data);
-
-          // Extract the array from the 'data' property
           if (response.data && Array.isArray(response.data.data)) {
-            this.data = response.data.data; // Assign the array to `data`
-            this.updatePaginatedData(); // Update paginated data after fetching
+            this.data = response.data.data;
+            this.updatePaginatedData();
           } else {
             console.error('Unexpected data format:', response.data);
           }
@@ -50,24 +60,22 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  updatePaginatedData() {
-    const startIndex = (this.currentPage - 1) * this.rowsPerPage;
-    const endIndex = startIndex + this.rowsPerPage;
-    this.paginatedData = this.data.slice(startIndex, endIndex);
+  // Total number of pages based on rowsPerPage
+  get totalPages(): number {
+    return Math.ceil(this.data.length / this.rowsPerPage);
   }
 
+  // Change page function
   changePage(page: number) {
+    if (page < 1 || page > this.totalPages) return; // Avoid invalid page numbers
     this.currentPage = page;
     this.updatePaginatedData();
   }
 
-  changeRowsPerPage(rows: number) {
-    this.rowsPerPage = rows;
-    this.currentPage = 1; // Reset to the first page
-    this.updatePaginatedData();
-  }
-
-  get totalPages(): number {
-    return Math.ceil(this.data.length / this.rowsPerPage);
+  // Update the paginated data based on current page
+  updatePaginatedData() {
+    const startIndex = (this.currentPage - 1) * this.rowsPerPage;
+    const endIndex = startIndex + this.rowsPerPage;
+    this.paginatedData = this.data.slice(startIndex, endIndex);
   }
 }

@@ -9,16 +9,34 @@ import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button'; 
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // Required for Angular Material
-import { MatFormFieldModule } from '@angular/material/form-field'; // Import MatFormFieldModule
-import { MatInputModule } from '@angular/material/input'; // Import MatInputModule (needed for mat-select, mat-input)
-import { MatSelectModule } from '@angular/material/select'; // Import MatSelectModule for mat-select
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
+import { HomeComponent } from './home/home.component';
+import { ProfileComponent } from './profile/profile.component';
+import { SettingComponent } from './setting/setting.component';
+
+import { MatIconModule } from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+
+import {MatListModule} from '@angular/material/list';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { TransactionsComponent } from './transactions/transactions.component'; 
+
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
-    LoginComponent
+    LoginComponent,
+    HomeComponent,
+    ProfileComponent,
+    SettingComponent,
+    SidebarComponent,
+    TransactionsComponent,
+    
   ],
   
   imports: [
@@ -29,13 +47,16 @@ import { FormsModule } from '@angular/forms';
     MatTableModule,
     MatPaginatorModule,
     MatButtonModule,
-    BrowserAnimationsModule, // Required for Angular Material animations
-    MatFormFieldModule, // Add this
-    MatInputModule,      // Add this for mat-input, mat-select
-    MatSelectModule,     // Add this for mat-select
-    FormsModule,
-    
-    
+    BrowserAnimationsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,  
+    FormsModule, 
+    MatIconModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatListModule
   ],
   
   providers: [],
