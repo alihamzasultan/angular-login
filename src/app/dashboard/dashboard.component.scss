@@ -10,7 +10,7 @@
 .custom-sidebar {
   width: 250px;
   height: 100vh;
-  background-color: #2f3b52;
+  background-color: #ffffff;
   color: white;
   position: fixed;
   top: 0;
@@ -36,18 +36,111 @@
   margin-left: 0; /* Full width when sidebar is hidden */
   width: 100%;
 }
-
 /* Navbar styles */
 .navbar {
+  position: fixed; /* Keeps the navbar fixed at the top of the viewport */
+  top: 0;
+  left: 250px; /* Aligns it to the right of the sidebar */
+  width: calc(100% - 300px); /* Matches the main content width minus the sidebar */
+  height: 40px; /* Fixed height for consistency */
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: #ffffff;
   padding: 10px 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  z-index: 1001;
-  position: sticky;
+  z-index: 1001; /* Ensures the navbar is above the table */
+  margin: 0 auto;
+
+  
+}
+
+/* Adjust for hidden sidebar */
+.sidebar-hidden .navbar {
+  left: 20px; /* Navbar shifts to the left when the sidebar is hidden */
+  right: 20px;
+  width: 95%; /* Spans the full width */
+
+  
+  
+}
+
+/* Main content adjustment */
+.main-content {
+  margin-top: 60px; /* Push content below the fixed navbar */
+}
+
+/* Table container spacing */
+.table-container {
+  margin-top: 20px; /* Adds spacing between the navbar and table */
+  overflow-x: auto; /* Enables horizontal scrolling for smaller screens */
+}
+
+/* Sidebar styles */
+.custom-sidebar {
+  width: 250px;
+  height: 100vh;
+  background-color: #ffffff;
+  color: white;
+  position: fixed; /* Sidebar remains fixed */
   top: 0;
+  left: 0;
+  z-index: 1000; /* Ensures sidebar is below the navbar */
+  transition: transform 0.3s ease-in-out;
+  transform: translateX(0);
+}
+
+.sidebar-hidden .custom-sidebar {
+  transform: translateX(-100%); /* Sidebar slides out of view */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+
+
+  .navbar h1 {
+    font-size: 18px; /* Adjust font size for smaller screens */
+  }
+
+  .navbar-actions button {
+    padding: 8px 10px; /* Reduce button padding */
+    font-size: 10px;
+    width: 50%;
+  }
+
+  .table-container {
+    margin-top: 40px; /* Increase spacing for smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+
+
+  .navbar h1 {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+
+  .navbar-actions {
+     /* Stack buttons below the navbar title */
+    justify-content: space-around;
+  }
+
+  .navbar-actions button {
+    font-size: 12px;
+    padding: 5px 8px;
+  }
+}
+
+/* Adjust for hidden sidebar */
+.sidebar-hidden .navbar {
+  max-width: 100%; /* Navbar spans the full width when sidebar is hidden */
+}
+
+/* Table container spacing */
+.table-container {
+  margin-top: 80px; /* Adds space between the navbar and table */
+  overflow-x: auto;
 }
 
 .navbar h1 {
@@ -62,15 +155,17 @@
 
 .navbar-actions button {
   padding: 10px 15px;
-  margin-left: 10px;
-  background-color: #607394;
+  margin-left: 5px;
+  margin-right: 30px;
+
   border: none;
-  color: white;
+  color: rgb(48, 45, 45);
   cursor: pointer;
+  border-radius: 10px;
 }
 
 .navbar-actions button:hover {
-  background-color: #293344;
+  background-color: #8fb2f0;
 }
 
 /* Hamburger button */
@@ -148,39 +243,369 @@ th, td {
 th {
   background-color: #f4f4f4;
 }
-/* Pagination styles */
-.pagination {
-  display: flex;
-  align-items: center;
-  margin-top: 10px;
-}
 
-.pagination button {
-  background-color: #607394;
-  color: white;
-  padding: 5px 10px;
-  margin: 0 5px;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
 
-.pagination button:hover {
-  background-color: #293344;
-}
-
-.pagination button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
-.pagination i {
-  font-size: 16px;
-}
 
 
 table tr:hover {
   background-color: #f1f1f1; /* Light gray background on hover */
 }
+
+
+
+
+
+
+
+
+
+//new styles---------------------------
+//------------------------------------
+//-------------------------------------
+
+.dashboard-wrapper {
+  display: flex;
+  flex-direction: row;
+  transition: all 0.3s ease-in-out;
+}
+
+.custom-sidebar {
+  width: 250px;
+  background-color: #f5f5f5;
+  transition: all 0.3s ease-in-out;
+}
+
+.custom-sidebar.collapsed {
+  width: 0;
+  overflow: hidden;
+}
+
+.main-content {
+  flex-grow: 1;
+  transition: all 0.3s ease-in-out;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #ddd;
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.navbar-link {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.icon-btn {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.hamburger-btn {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.hamburger-btn span {
+  width: 25px;
+  height: 3px;
+  background-color: #333;
+  transition: all 0.3s;
+}
+
+.hamburger-btn.open span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger-btn.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger-btn.open span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* Media Queries for smaller screens */
+@media (max-width: 768px) {
+  .navbar-left .navbar-link {
+    display: none; /* Hide text links */
+  }
+
+ 
+
+  .navbar-right {
+    gap: 8px;
+    display: none;
+  }
+
+  .navbar-right .navbar-link {
+    display: none; /* Hide text links */
+  }
+
+  .navbar-right .icon-btn {
+    font-size: 18px; /* Make icons a bit larger on small screens */
+  }
+
+  .custom-sidebar {
+    width: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-left .navbar-link {
+    display: none; /* Hide text links */
+  }
+
+  .navbar-right .navbar-link {
+    display: none; /* Hide text links */
+  }
+
+  .navbar-right .icon-btn {
+    font-size: 16px; /* Reduce icon size for very small screens */
+  }
+
+  .custom-sidebar {
+    width: 180px;
+  }
+}
+
+/* Stock In: Light Green */
+.stock-in {
+  background-color: #d4f7d4; /* Soft light green */
+ /* Dark text for contrast */
+  transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+
+.stock-in:hover {
+  background-color: #a8e6a1; /* Slightly darker green on hover */
+}
+
+/* Stock Out: Light Red */
+.stock-out {
+  background-color: #f8d7da; /* Soft light red */
+  /* Dark text for contrast */
+  transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+
+.stock-out:hover {
+  background-color: #f2b1b1; /* Slightly darker red on hover */
+}
+
+/* Pallete Type: Soft Yellow */
+.yellow-bg {
+  background-color: #fef8b0; /* Soft pastel yellow */
+  /* Dark text for readability */
+  transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+
+.yellow-bg:hover {
+  background-color: #f2e68e; /* Slightly darker yellow on hover */
+}
+
+/* Other Type: Light Blue */
+.other-color {
+  background-color: #e1f5fe; /* Soft light blue */
+  /* Dark text for readability */
+  transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+
+.other-color:hover {
+  background-color: #b3e1f6; /* Slightly darker blue on hover */
+}
+
+/* Hover effect for table rows */
+table tbody tr:hover {
+  background-color: #f1f1f1; /* Light gray background for row hover */
+  cursor: pointer; /* Change cursor to pointer to indicate interactivity */
+}
+
+
+
+
+//------------------
+//pagination-------
+
+/* Pagination container */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px; /* Space between buttons and page info */
+  margin-top: 20px;
+}
+
+/* Pagination buttons */
+.pagination-btn {
+  background-color: #4CAF50; /* Professional green */
+  color: white;
+  border: none;
+  border-radius: 5px; /* Rounded corners for a modern look */
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.pagination-btn:hover {
+  background-color: #45a049; /* Slightly darker green for hover */
+  transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+.pagination-btn:disabled {
+  background-color: #b0bec5; /* Disabled state: light gray */
+  color: #f5f5f5; /* Light gray text for disabled */
+  cursor: not-allowed; /* Change cursor to indicate it's not clickable */
+}
+
+.pagination-btn:disabled:hover {
+  background-color: #b0bec5; /* Keep same color when disabled */
+  transform: none; /* Remove hover effect when disabled */
+}
+
+/* Pagination info */
+.pagination-info {
+  font-size: 16px;
+  color: #333; /* Dark gray text for info */
+}
+
+
+
+
+
+
+
+
+
+/* Cards Section */
+/* Cards Section */
+/* Cards Section */
+.cards-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 30px; /* Adds space between the cards and the table */
+}
+
+/* Individual Card */
+.card {
+  background-color: #c9e8ee;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 250px; /* Makes the card 30% of the container's width */
+  padding: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Card Header */
+.card-header {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* Card Body */
+.card-body {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 15px;
+}
+
+/* Card Footer */
+.card-footer {
+  text-align: right;
+}
+
+.card-footer .btn {
+  background-color: #3e3f49;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.card-footer .btn:hover {
+  background-color: #45a049;
+}
+
+
+
+/* Media Queries for Responsiveness */
+
+/* Media Queries for Responsiveness */
+@media (max-width: 1024px) {
+  /* For tablets and smaller screens */
+  .card {
+    width: 45%; /* Two cards per row */
+  }
+}
+
+@media (max-width: 768px) {
+  /* For smaller tablets and mobile screens */
+  .card {
+    width: 100%; /* One card per row */
+  }
+}
+
+@media (max-width: 480px) {
+  /* For very small screens */
+  .cards-section {
+    justify-content: center; /* Center align cards */
+  }
+  .card {
+    width: 90%; /* Cards take up 90% of the container width */
+    margin-bottom: 15px;
+  }
+}
+
+
+
+
+
+.search-input {
+  padding: 8px 12px;
+  width: 250px; /* Adjust the width as needed */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  outline: none;
+}
+
+.search-input:focus {
+  border-color: #3f51b5; /* Highlight the border when focused */
+}
+
+
+
+
+
+

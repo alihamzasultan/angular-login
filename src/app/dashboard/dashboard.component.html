@@ -1,6 +1,6 @@
 <div class="dashboard-wrapper" [ngClass]="{ 'sidebar-hidden': !isSidebarVisible }">
   <!-- Sidebar -->
-  <div class="custom-sidebar">
+  <div class="custom-sidebar" [ngClass]="{ 'collapsed': !isSidebarVisible }">
     <app-sidebar></app-sidebar>
   </div>
 
@@ -8,19 +8,55 @@
   <div class="main-content">
     <!-- Navbar -->
     <nav class="navbar">
-      <button class="hamburger-btn" (click)="toggleSidebar()" [class.open]="!isSidebarVisible">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-      <h1>Dashboard</h1>
-      <div class="navbar-actions">
-        <button (click)="toggleTableVisibility()">
-          {{ showTable ? 'Hide Table' : 'Show Table' }}
+      <div class="navbar-left">
+        <button class="hamburger-btn" (click)="toggleSidebar()" [class.open]="isSidebarVisible">
+          <span></span>
+          <span></span>
+          <span></span>
         </button>
-        <button>Go to Dashboard</button>
+        <a class="navbar-link" routerLink="/dashboard">Dashboard</a>
+        <a class="navbar-link" routerLink="/users">Users</a>
+        <a class="navbar-link" routerLink="/settings">Settings</a>
+      </div>
+      <div class="navbar-right">
+        <button (click)="toggleTableVisibility()" class="icon-btn">
+          <mat-icon>{{ showTable ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        <button class="icon-btn">
+          <mat-icon>notifications</mat-icon>
+        </button>
+        <button class="icon-btn">
+          <mat-icon>email</mat-icon>
+        </button>
       </div>
     </nav>
+
+
+
+    <!-- Cards Section -->
+    <div class="cards-section">
+      <div class="card" *ngFor="let card of cards">
+        <div class="card-header">
+          <h4>{{ card.title }}</h4>
+        </div>
+        <div class="card-body">
+          <p>{{ card.content }}</p>
+        </div>
+        <div class="card-footer">
+          <button class="btn btn-primary">View More</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="search-container">
+      <input 
+        type="text" 
+        placeholder="Search from Table..." 
+        [(ngModel)]="searchQuery" 
+        (input)="filterData()" 
+        class="search-input"
+      />
+    </div>
 
     <!-- Table -->
     <div *ngIf="showTable" class="table-container">
@@ -39,11 +75,20 @@
           </tr>
         </thead>
         <tbody>
+          <!-- Display paginated data -->
           <tr *ngFor="let item of paginatedData">
             <td>{{ item.batchNumber }}</td>
             <td>{{ item.serialNumber }}</td>
-            <td>{{ item.type }}</td>
-            <td>{{ item.requestType }}</td>
+            <!-- Apply dynamic class to 'type' column -->
+            <td [ngClass]="getTypeColor(item.type)">
+              {{ item.type }}
+            </td>
+            <td [ngClass]="{
+                'stock-in': item.requestType.includes('Stock In'),
+                'stock-out': item.requestType.includes('Stock Out')
+              }">
+              {{ item.requestType }}
+            </td>
             <td>{{ item.receivedFrom }}</td>
             <td>{{ item.destination }}</td>
             <td>{{ item.productName }}</td>
@@ -51,18 +96,19 @@
             <td>{{ item.transactionToken }}</td>
           </tr>
         </tbody>
+        
       </table>
     </div>
 
     <!-- Pagination -->
     <div class="pagination" *ngIf="showTable">
-      <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">
+      <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1" class="pagination-btn">
         <i class="fa fa-chevron-left"></i> Previous
       </button>
       
-      <span>Page {{ currentPage }} of {{ totalPages }}</span>
+      <span class="pagination-info">Page {{ currentPage }} of {{ totalPages }}</span>
       
-      <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages">
+      <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages" class="pagination-btn">
         Next <i class="fa fa-chevron-right"></i>
       </button>
     </div>

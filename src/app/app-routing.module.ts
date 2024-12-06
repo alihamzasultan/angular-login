@@ -12,6 +12,7 @@ const routes: Routes = [
 
   // Other routes (if any)
   // { path: 'home', component: HomeComponent },
+  
   { path: 'dashboard', component: DashboardComponent },
   { path: 'home', component: HomeComponent },
   { path: 'profile', component: ProfileComponent },
